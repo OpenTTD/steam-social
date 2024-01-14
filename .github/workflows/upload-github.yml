@@ -1,0 +1,59 @@
+name: Upload (GitHub)
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
+
+jobs:
+  upload:
+    name: Upload (GitHub)
+
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Download bundle (Source)
+      uses: actions/download-artifact@v4
+      with:
+        name: steam-social-source
+        path: steam-social-source
+
+    - name: Download bundle (Windows x86)
+      uses: actions/download-artifact@v4
+      with:
+        name: steam-social-windows-x86
+        path: steam-social-windows-x86
+
+    - name: Download bundle (Windows x64)
+      uses: actions/download-artifact@v4
+      with:
+        name: steam-social-windows-x64
+        path: steam-social-windows-x64
+
+    - name: Download bundle (MacOS)
+      uses: actions/download-artifact@v4
+      with:
+        name: steam-social-macos-universal
+        path: steam-social-macos-universal
+
+    - name: Download bundle (Linux, Generic)
+      uses: actions/download-artifact@v4
+      with:
+        name: steam-social-linux-generic
+        path: steam-social-linux-generic
+
+    - name: Upload to GitHub
+      run: |
+        # "gh" only works automatically if run from a git repository.
+        git init
+        git remote add origin ${{ github.event.repository.html_url }}
+
+        # Don't upload some files
+        rm steam-social-source/README.md
+        rm steam-social-source/released.txt
+
+        gh release upload ${{ inputs.version }} steam-social-*/*
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
