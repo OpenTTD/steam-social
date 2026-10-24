@@ -15,31 +15,31 @@ jobs:
 
     steps:
     - name: Download bundle (Source)
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: steam-social-source
         path: steam-social-source
 
     - name: Download bundle (Windows x86)
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: steam-social-windows-x86
         path: steam-social-windows-x86
 
     - name: Download bundle (Windows x64)
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: steam-social-windows-x64
         path: steam-social-windows-x64
 
     - name: Download bundle (MacOS)
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: steam-social-macos-universal
         path: steam-social-macos-universal
 
     - name: Download bundle (Linux, Generic)
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         name: steam-social-linux-generic
         path: steam-social-linux-generic
